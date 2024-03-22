@@ -27,7 +27,7 @@ public class EsperClient {
             throw new RuntimeException(ex);
         }
 
-        EPStatement resultStatement = runtime.getDeploymentService().getStatement(deployment.getDeploymentId(), "result");
+        EPStatement resultStatement = runtime.getDeploymentService().getStatement(deployment.getDeploymentId(), "answer");
 
 
         // Add a listener to the statement to handle incoming events
@@ -52,7 +52,7 @@ public class EsperClient {
         try {
             epCompiled = compiler.compile("""
                     @public @buseventtype create json schema Ticker(symbol string, tstamp string, price int);
-                    @name('result') select * from Ticker#ext_timed(java.sql.Timestamp.valueOf(tstamp).getTime(), 2 days)""", compilerArgs);
+                    @name('answer') select * from Ticker#ext_timed(java.sql.Timestamp.valueOf(tstamp).getTime(), 2 days)""", compilerArgs);
         }
         catch (EPCompileException ex) {
             // handle exception here
